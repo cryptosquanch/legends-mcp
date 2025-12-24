@@ -10,7 +10,7 @@ export interface ListLegendsResult {
 /**
  * List all available legends
  */
-export declare function listLegends(input: ListLegendsInput): ListLegendsResult;
+export declare function listLegends(input?: ListLegendsInput): ListLegendsResult;
 /**
  * Format legends list as markdown for display
  */

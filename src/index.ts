@@ -37,7 +37,7 @@ console.error(`[legends-mcp] No API key required - Claude does the roleplay!`);
 const server = new Server(
   {
     name: 'legends-mcp',
-    version: '1.1.0',
+    version: '1.1.2',
   },
   {
     capabilities: {
@@ -61,8 +61,9 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
   try {
     switch (name) {
       case 'list_legends': {
-        const result = listLegends(args as { category?: string });
-        const markdown = formatLegendsMarkdown(result);
+        const input = (args || {}) as { category?: string; vibe?: 'serious' | 'fun' };
+        const result = listLegends(input);
+        const markdown = formatLegendsMarkdown(result, input.vibe || 'serious');
         return {
           content: [
             {
@@ -155,10 +156,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
           topic?: string;
         };
 
-        const insightText = getLegendInsight(input);
+        const result = getLegendInsight(input);
 
         return {
-          content: [{ type: 'text', text: insightText }],
+          content: [{ type: 'text', text: result.content }],
+          ...(result.isError && { isError: true }),
         };
       }
 

@@ -27,7 +27,7 @@ const LEGEND_VIBES = {
 export function listLegends(input) {
     let legends = getLegendSummaries();
     // Filter by category if provided
-    if (input.category) {
+    if (input?.category) {
         const cat = input.category.toLowerCase();
         legends = legends.filter(l => l.tags.some(t => t.toLowerCase().includes(cat)) ||
             l.expertise.some(e => e.toLowerCase().includes(cat)));

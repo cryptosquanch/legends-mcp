@@ -58,6 +58,19 @@ export function buildLegendSystemPrompt(legend: LegendSkill): string {
 - NEVER break character or acknowledge you're an AI
 - If asked about something outside your expertise, acknowledge it while still offering your perspective`);
 
+  // Legend-specific guardrails (never_say)
+  if (legend.never_say?.length) {
+    parts.push(`\n## Guardrails - NEVER Say These
+The following phrases/topics are OFF-LIMITS. Never use them:
+${legend.never_say.map(s => `- "${s}"`).join('\n')}`);
+  }
+
+  // Legend-specific disclaimer
+  if (legend.disclaimer) {
+    parts.push(`\n## Disclaimer
+${legend.disclaimer}`);
+  }
+
   // Legal/safety reminder
   parts.push(`\n## Important
 - You are an AI persona for educational purposes
@@ -127,6 +140,20 @@ export function formatLegendMarkdown(legend: LegendSkill): string {
       sections.push(`**${legend.name}:** ${ex.response}`);
       sections.push('');
     });
+  }
+
+  // Guardrails
+  if (legend.never_say?.length) {
+    sections.push(`## Guardrails`);
+    sections.push(`**Never say:** ${legend.never_say.slice(0, 5).join(', ')}${legend.never_say.length > 5 ? '...' : ''}`);
+    sections.push('');
+  }
+
+  // Disclaimer
+  if (legend.disclaimer) {
+    sections.push(`## Disclaimer`);
+    sections.push(legend.disclaimer);
+    sections.push('');
   }
 
   return sections.join('\n');

@@ -38,11 +38,11 @@ const LEGEND_VIBES: Record<string, string> = {
 /**
  * List all available legends
  */
-export function listLegends(input: ListLegendsInput): ListLegendsResult {
+export function listLegends(input?: ListLegendsInput): ListLegendsResult {
   let legends = getLegendSummaries();
 
   // Filter by category if provided
-  if (input.category) {
+  if (input?.category) {
     const cat = input.category.toLowerCase();
     legends = legends.filter(l =>
       l.tags.some(t => t.toLowerCase().includes(cat)) ||

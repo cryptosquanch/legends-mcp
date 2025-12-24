@@ -170,22 +170,47 @@ const DEFAULT_INSIGHTS = {
   ],
 };
 
+export interface GetLegendInsightResult {
+  content: string;
+  isError?: boolean;
+}
+
 export function getLegendInsight(
   input: GetLegendInsightInput
-): string {
+): GetLegendInsightResult {
   const legend = getLegendById(input.legend_id);
   if (!legend) {
-    return `Legend "${input.legend_id}" not found. Use list_legends to see available legends.`;
+    return {
+      content: `Legend "${input.legend_id}" not found. Use list_legends to see available legends.`,
+      isError: true,
+    };
   }
 
   const insights = LEGEND_INSIGHTS[input.legend_id] || DEFAULT_INSIGHTS;
 
-  // Pick a random quote and format as insight block
-  const randomQuote = insights.quotes[Math.floor(Math.random() * insights.quotes.length)];
-  const randomFramework = insights.frameworks[Math.floor(Math.random() * insights.frameworks.length)];
+  // Filter by topic if provided
+  let quotes = insights.quotes;
+  let frameworks = insights.frameworks;
+
+  if (input.topic) {
+    const topicLower = input.topic.toLowerCase();
+    // Try to find topic-relevant quotes/frameworks
+    const filteredQuotes = quotes.filter(q => q.toLowerCase().includes(topicLower));
+    const filteredFrameworks = frameworks.filter(f => f.toLowerCase().includes(topicLower));
+
+    // Use filtered if we found matches, otherwise use all
+    if (filteredQuotes.length > 0) quotes = filteredQuotes;
+    if (filteredFrameworks.length > 0) frameworks = filteredFrameworks;
+  }
+
+  // Pick a random quote and framework
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  const randomFramework = frameworks[Math.floor(Math.random() * frameworks.length)];
+
+  const topicNote = input.topic ? `\n\n*Topic: ${input.topic}*` : '';
 
   const insightBlock = `
-# ${legend.name}'s Insight
+# ${legend.name}'s Insight${topicNote}
 
 "${randomQuote}"
 
@@ -196,7 +221,9 @@ ${randomFramework}
 *Want more? Use \`summon_legend\` to have a full conversation.*
 `;
 
-  return insightBlock.trim();
+  return {
+    content: insightBlock.trim(),
+  };
 }
 
 // Get all insights for a legend (for reference)
