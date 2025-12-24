@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// Bundle legend YAML files into the package
+// Validate legend YAML files exist in the package
 
 import fs from 'fs';
 import path from 'path';
@@ -8,60 +8,36 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const SOURCE_DIR = path.join(__dirname, '..', '..', '..', 'content', 'skills', 'legends');
-const DEST_DIR = path.join(__dirname, '..', 'legends');
+const LEGENDS_DIR = path.join(__dirname, '..', 'legends');
 
-// Legends to include
-const LEGENDS = [
-  'elon-musk',
-  'warren-buffett',
-  'steve-jobs',
-  'jeff-bezos',
-  'charlie-munger',
-  'paul-graham',
-  'jensen-huang',
-  'marc-andreessen',
-  'naval-ravikant',
-  'reid-hoffman',
-  'peter-thiel',
-  'sam-altman',
-  // Crypto legends
-  'cz-binance',
-  'anatoly-yakovenko',
-  'mert-mumtaz',
-  'michael-heinrich',
-];
+function validateLegends() {
+  console.log('Validating legends...');
 
-function bundleLegends() {
-  console.log('Bundling legends...');
-
-  // Create destination directory
-  if (!fs.existsSync(DEST_DIR)) {
-    fs.mkdirSync(DEST_DIR, { recursive: true });
+  if (!fs.existsSync(LEGENDS_DIR)) {
+    console.error(`Error: Legends directory not found at ${LEGENDS_DIR}`);
+    process.exit(1);
   }
 
-  let count = 0;
-  for (const legend of LEGENDS) {
-    const sourcePath = path.join(SOURCE_DIR, legend, 'skill.yaml');
-    const destPath = path.join(DEST_DIR, legend);
+  const entries = fs.readdirSync(LEGENDS_DIR, { withFileTypes: true });
+  const legends = entries.filter(e => e.isDirectory());
 
-    if (!fs.existsSync(sourcePath)) {
-      console.warn(`Warning: ${legend} not found at ${sourcePath}`);
-      continue;
+  let valid = 0;
+  let invalid = 0;
+
+  for (const legend of legends) {
+    const skillPath = path.join(LEGENDS_DIR, legend.name, 'skill.yaml');
+    if (fs.existsSync(skillPath)) {
+      valid++;
+    } else {
+      console.warn(`  ⚠ ${legend.name}: missing skill.yaml`);
+      invalid++;
     }
-
-    // Create legend directory in dest
-    if (!fs.existsSync(destPath)) {
-      fs.mkdirSync(destPath, { recursive: true });
-    }
-
-    // Copy skill.yaml
-    fs.copyFileSync(sourcePath, path.join(destPath, 'skill.yaml'));
-    count++;
-    console.log(`  ✓ ${legend}`);
   }
 
-  console.log(`\nBundled ${count} legends to ${DEST_DIR}`);
+  console.log(`\n✓ ${valid} legends validated`);
+  if (invalid > 0) {
+    console.warn(`⚠ ${invalid} legends have issues`);
+  }
 }
 
-bundleLegends();
+validateLegends();

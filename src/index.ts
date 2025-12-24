@@ -22,10 +22,9 @@ import {
   formatSummonedLegend,
   getLegendContext,
   getLegendInsight,
+  searchLegends,
+  formatSearchResults,
 } from './tools/index.js';
-
-// Short disclaimer
-const SHORT_DISCLAIMER = '*AI persona for educational purposes. Not affiliated with or endorsed by the real person.*';
 
 // Load legends at startup
 const legends = loadLegends();
@@ -37,7 +36,7 @@ console.error(`[legends-mcp] No API key required - Claude does the roleplay!`);
 const server = new Server(
   {
     name: 'legends-mcp',
-    version: '1.1.2',
+    version: '1.1.3',
   },
   {
     capabilities: {
@@ -161,6 +160,24 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         return {
           content: [{ type: 'text', text: result.content }],
           ...(result.isError && { isError: true }),
+        };
+      }
+
+      case 'search_legends': {
+        const input = args as { query: string };
+
+        if (!input.query) {
+          return {
+            content: [{ type: 'text', text: 'Error: query parameter is required' }],
+            isError: true,
+          };
+        }
+
+        const result = searchLegends(input);
+        const formatted = formatSearchResults(result, input.query);
+
+        return {
+          content: [{ type: 'text', text: formatted }],
         };
       }
 

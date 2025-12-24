@@ -2,6 +2,7 @@ export { listLegendsTool, listLegends, formatLegendsMarkdown } from './list-lege
 export { summonLegendTool, summonLegend, formatSummonedLegend } from './summon-legend.js';
 export { getLegendContextTool, getLegendContext } from './get-legend-context.js';
 export { getLegendInsightTool, getLegendInsight, getAllLegendInsights } from './get-legend-insight.js';
+export { searchLegendsTool, searchLegends, formatSearchResults } from './search-legends.js';
 export declare const allTools: ({
     name: string;
     description: string;
@@ -72,6 +73,19 @@ export declare const allTools: ({
                 description: string;
             };
             topic: {
+                type: string;
+                description: string;
+            };
+        };
+        required: string[];
+    };
+} | {
+    name: string;
+    description: string;
+    inputSchema: {
+        type: "object";
+        properties: {
+            query: {
                 type: string;
                 description: string;
             };

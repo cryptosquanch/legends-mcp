@@ -159,6 +159,29 @@ const DEFAULT_INSIGHTS = {
         '**Focus**: Do fewer things better.',
     ],
 };
+/**
+ * Build dynamic insights from YAML data when static LEGEND_INSIGHTS doesn't cover a legend
+ */
+function buildDynamicInsights(legend) {
+    const quotes = [];
+    const frameworks = [];
+    // Pull principles as quotes
+    if (legend.principles?.length) {
+        quotes.push(...legend.principles.slice(0, 5));
+    }
+    // Pull patterns as frameworks
+    if (legend.patterns?.length) {
+        frameworks.push(...legend.patterns.slice(0, 4).map(p => `**${p.name}**: ${p.description}`));
+    }
+    // Fallback to defaults if empty
+    if (quotes.length === 0) {
+        quotes.push(...DEFAULT_INSIGHTS.quotes);
+    }
+    if (frameworks.length === 0) {
+        frameworks.push(...DEFAULT_INSIGHTS.frameworks);
+    }
+    return { quotes, frameworks };
+}
 export function getLegendInsight(input) {
     const legend = getLegendById(input.legend_id);
     if (!legend) {
@@ -167,7 +190,8 @@ export function getLegendInsight(input) {
             isError: true,
         };
     }
-    const insights = LEGEND_INSIGHTS[input.legend_id] || DEFAULT_INSIGHTS;
+    // Use static insights if available, otherwise build from YAML
+    const insights = LEGEND_INSIGHTS[input.legend_id] || buildDynamicInsights(legend);
     // Filter by topic if provided
     let quotes = insights.quotes;
     let frameworks = insights.frameworks;
@@ -176,7 +200,22 @@ export function getLegendInsight(input) {
         // Try to find topic-relevant quotes/frameworks
         const filteredQuotes = quotes.filter(q => q.toLowerCase().includes(topicLower));
         const filteredFrameworks = frameworks.filter(f => f.toLowerCase().includes(topicLower));
-        // Use filtered if we found matches, otherwise use all
+        // Also search in legend's principles and patterns for topic
+        if (filteredQuotes.length === 0 && legend.principles?.length) {
+            const topicPrinciples = legend.principles.filter(p => p.toLowerCase().includes(topicLower));
+            if (topicPrinciples.length > 0) {
+                quotes = topicPrinciples;
+            }
+        }
+        if (filteredFrameworks.length === 0 && legend.patterns?.length) {
+            const topicPatterns = legend.patterns
+                .filter(p => p.name.toLowerCase().includes(topicLower) || p.description.toLowerCase().includes(topicLower))
+                .map(p => `**${p.name}**: ${p.description}`);
+            if (topicPatterns.length > 0) {
+                frameworks = topicPatterns;
+            }
+        }
+        // Use filtered if we found matches
         if (filteredQuotes.length > 0)
             quotes = filteredQuotes;
         if (filteredFrameworks.length > 0)
@@ -186,6 +225,7 @@ export function getLegendInsight(input) {
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
     const randomFramework = frameworks[Math.floor(Math.random() * frameworks.length)];
     const topicNote = input.topic ? `\n\n*Topic: ${input.topic}*` : '';
+    const disclaimer = legend.disclaimer || 'AI persona for educational purposes. Not affiliated with the real person.';
     const insightBlock = `
 # ${legend.name}'s Insight${topicNote}
 
@@ -196,6 +236,8 @@ ${randomFramework}
 ---
 
 *Want more? Use \`summon_legend\` to have a full conversation.*
+
+*${disclaimer}*
 `;
     return {
         content: insightBlock.trim(),

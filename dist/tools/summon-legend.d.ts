@@ -1,3 +1,4 @@
+import type { ModelHints } from '../types.js';
 export interface SummonLegendInput {
     legend_id: string;
     context?: string;
@@ -11,6 +12,7 @@ export interface SummonedLegend {
         tone: string;
         key_principles: string[];
     };
+    model_hints?: ModelHints;
 }
 /**
  * Summon a legend - returns their persona for Claude to adopt

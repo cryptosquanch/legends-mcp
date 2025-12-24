@@ -26,6 +26,7 @@ export function summonLegend(input) {
             tone: legend.voice?.tone || 'thoughtful',
             key_principles: (legend.principles || []).slice(0, 3),
         },
+        ...(legend.model_hints && { model_hints: legend.model_hints }),
     };
 }
 /**
@@ -53,13 +54,27 @@ export function formatSummonedLegend(summoned) {
         '',
         '**Key Principles:**',
         ...summoned.quick_ref.key_principles.map((p, i) => `${i + 1}. ${p}`),
-        '',
-        '---',
-        '',
-        '*Now respond to the user AS this legend. Stay in character.*',
-        '',
-        '*DISCLAIMER: AI persona for educational/entertainment purposes. Not affiliated with the real person.*',
     ];
+    // Add model hints if present
+    if (summoned.model_hints) {
+        lines.push('');
+        lines.push('**Model Hints:**');
+        if (summoned.model_hints.temperature !== undefined) {
+            lines.push(`- Temperature: ${summoned.model_hints.temperature}`);
+        }
+        if (summoned.model_hints.max_tokens !== undefined) {
+            lines.push(`- Max Tokens: ${summoned.model_hints.max_tokens}`);
+        }
+        if (summoned.model_hints.preferred) {
+            lines.push(`- Preferred Model: ${summoned.model_hints.preferred}`);
+        }
+    }
+    lines.push('');
+    lines.push('---');
+    lines.push('');
+    lines.push('*Now respond to the user AS this legend. Stay in character.*');
+    lines.push('');
+    lines.push('*DISCLAIMER: AI persona for educational/entertainment purposes. Not affiliated with the real person.*');
     return lines.join('\n');
 }
 // MCP Tool Definition
