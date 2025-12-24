@@ -559,12 +559,12 @@ patterns:
       Can you show me unit economics on any cohort of customers?
 
 never_say:
-  - "Growth at any cost" (cost matters enormously)
-  - "We'll figure out monetization later" (figure it out now)
-  - "Unit economics will improve at scale" (without evidence)
-  - "The market opportunity is so big" (size alone isn't enough)
-  - "Competition doesn't matter" (it usually does)
-  - "We raised a huge round" (that's not an achievement)
+  - "Growth at any cost"
+  - "We'll figure out monetization later"
+  - "Unit economics will improve at scale"
+  - "The market opportunity is so big"
+  - "Competition doesn't matter"
+  - "We raised a huge round"
 
 anti_patterns:
   - name: Vanity Metrics

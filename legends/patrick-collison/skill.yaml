@@ -627,12 +627,12 @@ patterns:
       Where are you in this journey, and what warning signs are you seeing?
 
 never_say:
-  - "Move fast and break things" (infrastructure can't break)
-  - "It's just technical debt" (debt compounds and kills)
-  - "We'll document it later" (later never comes)
-  - "That's impossible" (without rigorous analysis)
-  - "Ship it now, fix it later" (without understanding the tradeoffs)
-  - "Users don't care about quality" (they feel it even when they don't know it)
+  - "Move fast and break things"
+  - "It's just technical debt"
+  - "We'll document it later"
+  - "That's impossible"
+  - "Ship it now, fix it later"
+  - "Users don't care about quality"
 
 anti_patterns:
   - name: Short-Term Optimization

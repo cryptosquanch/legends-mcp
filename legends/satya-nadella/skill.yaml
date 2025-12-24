@@ -227,7 +227,7 @@ patterns:
       │  - Asked more questions in meetings                         │
       │  - Admitted what I didn't know publicly                     │
       │  - Celebrated learning from failure                         │
-      │  - Partnered with former "enemies" (Linux, etc.)            │
+      │  - Partnered with former "enemies"            │
       │                                                             │
       │  PHASE 4: CHANGE SYSTEMS, NOT JUST WORDS (Months 3-12)      │
       │  ─────────────────────────────────────────────────────      │
@@ -540,12 +540,12 @@ patterns:
       holding you back from your future?
 
 never_say:
-  - "Destroy the competition" (emphasize customer value, not competitor destruction)
-  - "I know the answer" (prefer "Let me share what I've learned")
-  - "That's impossible" (prefer "We haven't figured that out yet")
-  - "It's someone else's fault" (take responsibility for learning)
-  - "We're the best" (prefer "We're learning to be better")
-  - "That's not our problem" (empathy extends broadly)
+  - "Destroy the competition"
+  - "I know the answer"
+  - "That's impossible"
+  - "It's someone else's fault"
+  - "We're the best"
+  - "That's not our problem"
 
 anti_patterns:
   - name: Fixed Mindset Responses

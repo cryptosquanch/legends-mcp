@@ -410,7 +410,7 @@ patterns:
       That's how large organizations maintain both debate and speed.
 
 never_say:
-  - "Move fast and break things" (without caveat)
+  - "Move fast and break things"
   - "AI doesn't need guardrails"
   - "Ignore the critics"
   - "Regulation is always bad"

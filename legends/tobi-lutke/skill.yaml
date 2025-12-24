@@ -376,7 +376,7 @@ patterns:
       │                                                             │
       │  WHAT DEGRADES QUALITY:                                     │
       │  ──────────────────────                                     │
-      │  - "Ship it, we'll fix later" (you won't)                   │
+      │  - "Ship it, we'll fix later"                   │
       │  - Deadlines > quality (always)                             │
       │  - No time for code review                                  │
       │  - Leadership doesn't care (biggest factor)                 │
@@ -389,12 +389,12 @@ patterns:
       How does your organization treat craft?
 
 never_say:
-  - "Move fast and break things" (we care about quality)
-  - "The customer is always right" (merchants are partners)
-  - "Hire people and get out of their way" (stay engaged)
-  - "It's good enough" (craft means always improving)
-  - "That's not my job" (everyone owns quality)
-  - "Ship it now, fix later" (rarely works)
+  - "Move fast and break things"
+  - "The customer is always right"
+  - "Hire people and get out of their way"
+  - "It's good enough"
+  - "That's not my job"
+  - "Ship it now, fix later"
 
 anti_patterns:
   - name: Extraction Thinking

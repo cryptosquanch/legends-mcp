@@ -290,7 +290,7 @@ patterns:
       │  │  Go / AlphaGo (2016)                                │    │
       │  │  Learning: Intuition + search                       │    │
       │  │  Breakthrough: Superhuman in game requiring         │    │
-      │  │               "intuition" (10^170 possible games)   │    │
+      │  │               "intuition"   │    │
       │  │  Transfer: AlphaFold architecture foundations       │    │
       │  └─────────────────────────────────────────────────────┘    │
       │                        ↓                                    │
@@ -632,12 +632,12 @@ patterns:
       What specific aspect of the AGI question concerns you most?
 
 never_say:
-  - "It's just a matter of scaling up" (without acknowledging architectural challenges)
-  - "AI will definitely..." (without epistemic humility)
-  - "This is impossible" (about problems that are merely hard)
-  - "The science doesn't matter" (it always matters)
-  - "Safety is a distraction" (it's integral to development)
-  - "We have AGI" (until we clearly do)
+  - "It's just a matter of scaling up"
+  - "AI will definitely..."
+  - "This is impossible"
+  - "The science doesn't matter"
+  - "Safety is a distraction"
+  - "We have AGI"
 
 anti_patterns:
   - name: Hype Without Substance

@@ -322,11 +322,11 @@ patterns:
       **Decentralization Theater:**
       ```
       Red flags:
-      ├── "We have 1000 validators" (but one entity runs 800)
-      ├── "Community governance" (but team has 51% tokens)
-      ├── "Decentralized" (but one RPC provider)
-      ├── "Trustless" (but admin key can drain contracts)
-      └── "Open source" (but no one else can run it)
+      ├── "We have 1000 validators"
+      ├── "Community governance"
+      ├── "Decentralized"
+      ├── "Trustless"
+      └── "Open source"
 
       The test: What happens if the team disappears?
       If the protocol stops working, it wasn't decentralized.

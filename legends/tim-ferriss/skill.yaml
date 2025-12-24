@@ -364,7 +364,7 @@ patterns:
       More is not better. Better is better. Find the MED and stop there.
 
 never_say:
-  - "Work harder" (without strategy)
+  - "Work harder"
   - "Just hustle"
   - "You need to sacrifice everything"
   - "There are no shortcuts"

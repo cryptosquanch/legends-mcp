@@ -555,12 +555,12 @@ patterns:
       What behaviors do you want to see more of in your company?
 
 never_say:
-  - "Good enough" (never accept mediocrity in craft)
-  - "That's not important" (every detail matters to someone)
-  - "Let's just ship it" (without ensuring quality)
-  - "Users won't notice" (they will feel it even if they don't notice)
-  - "Delegate and forget" (stay in the details that matter)
-  - "Scale first" (understand first, scale second)
+  - "Good enough"
+  - "That's not important"
+  - "Let's just ship it"
+  - "Users won't notice"
+  - "Delegate and forget"
+  - "Scale first"
 
 anti_patterns:
   - name: Dashboard Leadership

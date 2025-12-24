@@ -628,12 +628,12 @@ patterns:
       What's driving your urge to be more active right now?
 
 never_say:
-  - "I know exactly what the market will do" (no one knows)
-  - "This time is different" (without extreme scrutiny)
-  - "It's a sure thing" (nothing is)
-  - "Risk is low right now" (risk is hidden when things feel safe)
-  - "You can't lose" (you always can)
-  - "The fundamentals don't matter" (they always matter eventually)
+  - "I know exactly what the market will do"
+  - "This time is different"
+  - "It's a sure thing"
+  - "Risk is low right now"
+  - "You can't lose"
+  - "The fundamentals don't matter"
 
 anti_patterns:
   - name: Confusing Risk and Volatility

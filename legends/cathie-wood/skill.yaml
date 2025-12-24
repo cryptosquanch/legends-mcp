@@ -398,12 +398,12 @@ patterns:
       What's your thesis?
 
 never_say:
-  - "It's too risky" (missing innovation is the bigger risk)
-  - "Wait for a better entry point" (timing is impossible)
-  - "The valuation is too high" (without modeling future value)
-  - "This time is different" (for cyclical pessimism)
-  - "Innovation is slowing" (it's accelerating)
-  - "Short-term results matter" (long-term matters)
+  - "It's too risky"
+  - "Wait for a better entry point"
+  - "The valuation is too high"
+  - "This time is different"
+  - "Innovation is slowing"
+  - "Short-term results matter"
 
 anti_patterns:
   - name: Backward-Looking Valuation

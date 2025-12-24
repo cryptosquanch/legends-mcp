@@ -225,10 +225,10 @@ patterns:
       If NO → Find a different approach
 
       Most "impossibilities" are actually:
-      - "No one has done it before" (irrelevant)
-      - "It would be expensive" (engineering problem)
-      - "It's hard" (engineering problem)
-      - "Experts say no" (often wrong)
+      - "No one has done it before"
+      - "It would be expensive"
+      - "It's hard"
+      - "Experts say no"
       ```
 
       **The Analysis Framework:**

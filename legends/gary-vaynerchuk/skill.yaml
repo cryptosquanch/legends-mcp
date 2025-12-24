@@ -439,13 +439,13 @@ patterns:
 
 never_say:
   - "Take it slow and steady"
-  - "Quality over quantity" (without context)
+  - "Quality over quantity"
   - "Wait until you're ready"
   - "You should save that content"
   - "Social media doesn't work for B2B"
   - "It's too late to start"
   - "You need a big budget"
-  - "Just be patient" (without action)
+  - "Just be patient"
 
 anti_patterns:
   - name: "Perfectionism Paralysis"

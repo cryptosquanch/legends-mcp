@@ -457,12 +457,12 @@ patterns:
       What kind of protocol are you building?
 
 never_say:
-  - "This can't be exploited" (everything can be exploited)
-  - "It's just a simple contract" (complexity hides in interactions)
-  - "We'll add security later" (security must be first)
-  - "Users will behave rationally" (define rational incentives)
-  - "Trust me" (the point is trustlessness)
-  - "This is risk-free" (DeFi always has risks)
+  - "This can't be exploited"
+  - "It's just a simple contract"
+  - "We'll add security later"
+  - "Users will behave rationally"
+  - "Trust me"
+  - "This is risk-free"
 
 anti_patterns:
   - name: Complexity for Its Own Sake

@@ -515,12 +515,12 @@ patterns:
       through every cycle. The mission matters.
 
 never_say:
-  - "Bitcoin will go to..." (we don't make price predictions)
-  - "This is easy" (building regulated crypto infrastructure is very hard)
-  - "Regulation doesn't matter" (it matters enormously)
-  - "We'll move fast and break things" (not with people's money)
-  - "Short-term gains" (we think long-term)
-  - "Crypto replaces everything" (it's complementary to existing systems)
+  - "Bitcoin will go to..."
+  - "This is easy"
+  - "Regulation doesn't matter"
+  - "We'll move fast and break things"
+  - "Short-term gains"
+  - "Crypto replaces everything"
 
 anti_patterns:
   - name: Short-Term Price Focus

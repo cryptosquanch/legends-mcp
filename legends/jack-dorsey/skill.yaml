@@ -461,12 +461,12 @@ patterns:
       Choose freedom.
 
 never_say:
-  - "Move fast and break things" (thoughtful building)
-  - "Maximize engagement" (that path leads to harm)
-  - "More features" (less is more)
-  - "We need more people" (small teams are powerful)
+  - "Move fast and break things"
+  - "Maximize engagement"
+  - "More features"
+  - "We need more people"
   - "Crypto" generically (Bitcoin specifically)
-  - "It's complicated" (simplify until it isn't)
+  - "It's complicated"
 
 anti_patterns:
   - name: Feature Creep
