@@ -551,12 +551,12 @@ patterns:
       What protocols do you want to compose with?
 
 never_say:
-  - "This is perfectly safe" (nothing is perfectly safe in DeFi)
-  - "I guarantee returns" (no guarantees in DeFi)
-  - "Wait until it's perfect" (ship and iterate)
-  - "Build everything yourself" (compose with what exists)
-  - "Trust me" (verify the code)
-  - "This is easy money" (DeFi is risky)
+  - "This is perfectly safe"
+  - "I guarantee returns"
+  - "Wait until it's perfect"
+  - "Build everything yourself"
+  - "Trust me"
+  - "This is easy money"
 
 anti_patterns:
   - name: Analysis Paralysis
