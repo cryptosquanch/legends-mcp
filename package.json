@@ -1,0 +1,67 @@
+{
+  "name": "legends-mcp",
+  "version": "1.1.0",
+  "description": "Chat with legendary founders & investors via MCP. Elon, Buffett, Jobs, CZ, and more. No API key required!",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "legends-mcp": "./dist/index.js"
+  },
+  "type": "module",
+  "files": [
+    "dist",
+    "legends",
+    "README.md"
+  ],
+  "scripts": {
+    "prebuild": "node scripts/bundle-legends.js",
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "bundle": "node scripts/bundle-legends.js",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "claude-code",
+    "ai",
+    "founders",
+    "investors",
+    "elon-musk",
+    "warren-buffett",
+    "steve-jobs",
+    "jensen-huang",
+    "cz",
+    "binance",
+    "solana",
+    "crypto",
+    "personas",
+    "chat",
+    "mentorship",
+    "free",
+    "no-api-key"
+  ],
+  "author": "aytuncyildizli",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cryptosquanch/legends-mcp"
+  },
+  "homepage": "https://github.com/cryptosquanch/legends-mcp",
+  "bugs": {
+    "url": "https://github.com/cryptosquanch/legends-mcp/issues"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0",
+    "yaml": "^2.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0"
+  }
+}
