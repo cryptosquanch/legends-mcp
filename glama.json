@@ -1,0 +1,31 @@
+{
+  "$schema": "https://glama.ai/schemas/glama.json",
+  "name": "Legends MCP",
+  "description": "Chat with legendary founders & investors via MCP. Elon, Buffett, Jobs, CZ, and more. No API key required!",
+  "author": {
+    "name": "cryptosquanch",
+    "github": "cryptosquanch"
+  },
+  "repository": "https://github.com/cryptosquanch/legends-mcp",
+  "npm": "legends-mcp",
+  "categories": ["AI", "Education", "Entertainment", "Productivity"],
+  "tags": [
+    "personas",
+    "founders",
+    "investors",
+    "mentorship",
+    "elon-musk",
+    "warren-buffett",
+    "steve-jobs",
+    "cz",
+    "crypto",
+    "free",
+    "no-api-key"
+  ],
+  "features": [
+    "36 legendary personas",
+    "No API key required",
+    "4 MCP tools",
+    "Claude-native roleplay"
+  ]
+}
