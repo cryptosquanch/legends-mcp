@@ -121,6 +121,16 @@ The views expressed by these AI personas are generated interpretations, not actu
 
 ---
 
+## Documentation
+
+**📚 [Architecture Guide](./ARCHITECTURE.md)** - Learn how to:
+- Scale Legends MCP with custom user-defined personas
+- Maintain privacy-first design (zero external APIs)
+- Implement multi-tenancy and storage solutions
+- Extend the YAML schema for custom use cases
+
+---
+
 ## Contributing
 
 Want to add a legend? PRs welcome!
