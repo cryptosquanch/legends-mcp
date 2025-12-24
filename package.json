@@ -56,6 +56,10 @@
   "bugs": {
     "url": "https://github.com/cryptosquanch/legends-mcp/issues"
   },
+  "context7": {
+    "url": "https://context7.com/cryptosquanch/legends-mcp",
+    "public_key": "pk_4lopjegNOzbw8bDyfhoUx"
+  },
   "engines": {
     "node": ">=18.0.0"
   },
