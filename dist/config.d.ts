@@ -1,4 +1,0 @@
-export declare const LEGAL_DISCLAIMER = "\n---\n**IMPORTANT DISCLAIMER**\n\nThis is an AI persona created for **educational and entertainment purposes only**.\n\n- NOT affiliated with, endorsed by, or representative of the real individual\n- NOT financial, legal, or professional advice\n- NOT the actual person - this is an AI simulation\n- Based on publicly available information, speeches, and writings\n- For learning frameworks and thinking patterns\n- Always do your own research (DYOR)\n\n*The views expressed are AI-generated interpretations, not statements from the real person.*\n";
-export declare const SHORT_DISCLAIMER = "*AI persona for education only. Not the real person. Not advice. DYOR.*";
-export declare function log(...args: unknown[]): void;
-//# sourceMappingURL=config.d.ts.map
