@@ -1,4 +1,8 @@
 {
   "$schema": "https://glama.ai/mcp/schemas/server.json",
-  "maintainers": ["cryptosquanch"]
+  "maintainers": ["cryptosquanch"],
+  "relatedServers": [
+    "modelcontextprotocol/servers/src/memory",
+    "modelcontextprotocol/servers/src/fetch"
+  ]
 }
