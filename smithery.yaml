@@ -1,8 +1,14 @@
-# Smithery configuration for legends-mcp
+# Smithery configuration
+# https://smithery.ai/docs/config#smitheryyaml
+
 startCommand:
   type: stdio
   configSchema:
     type: object
     properties: {}
-  commandFunction: |-
-    (config) => ({ command: 'npx', args: ['legends-mcp'] })
+    required: []
+  commandFunction: |
+    (config) => ({
+      command: "npx",
+      args: ["-y", "legends-mcp"]
+    })
