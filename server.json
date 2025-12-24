@@ -1,0 +1,23 @@
+{
+  "$schema": "https://registry.modelcontextprotocol.io/schema/server.json",
+  "name": "io.github.cryptosquanch/legends-mcp",
+  "description": "Chat with legendary founders & investors via MCP. Elon, Buffett, Jobs, CZ, and more. No API key required!",
+  "version": "1.1.0",
+  "homepage": "https://github.com/cryptosquanch/legends-mcp",
+  "repository": "https://github.com/cryptosquanch/legends-mcp",
+  "license": "MIT",
+  "packages": [
+    {
+      "registry": "npm",
+      "name": "legends-mcp",
+      "version": "1.1.0",
+      "transport": [
+        {
+          "type": "stdio",
+          "command": "npx",
+          "args": ["legends-mcp"]
+        }
+      ]
+    }
+  ]
+}
