@@ -121,6 +121,25 @@ The views expressed by these AI personas are generated interpretations, not actu
 
 ---
 
+## Examples
+
+**💻 [Code Examples](./examples/)** - Runnable examples covering:
+- **Combined Workflow**: Using `get_legend_context` + `get_legend_insight` together
+- **Brainstorming Sessions**: Alternating insights from multiple legends
+- **Conflicting Advice**: Resolving disagreements between legends
+- **Multi-Turn Conversations**: Maintaining persona context across exchanges
+- **Blockchain Discussion**: Using Crypto Builder personas (CZ, Andre Cronje, Anatoly)
+
+Each example is executable (`chmod +x examples/*.js`) and includes:
+- Real-world scenarios (startup decisions, product design, DeFi protocols)
+- Error handling patterns
+- Performance optimization tips
+- Complete MCP tool coverage
+
+See **[examples/README.md](./examples/README.md)** for full catalog and usage guide.
+
+---
+
 ## Documentation
 
 **📚 [Architecture Guide](./ARCHITECTURE.md)** - Learn how to:
