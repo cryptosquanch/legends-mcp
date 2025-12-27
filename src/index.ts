@@ -42,7 +42,7 @@ console.error(`[legends-mcp] No API key required - Claude does the roleplay!`);
 const server = new Server(
   {
     name: 'legends-mcp',
-    version: '1.4.0', // Security release - sync with package.json
+    version: '1.4.1', // Security release - sync with package.json
   },
   {
     capabilities: {

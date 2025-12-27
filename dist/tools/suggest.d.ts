@@ -1,6 +1,11 @@
 export interface SuggestInput {
     message: string;
 }
+export interface SuggestedAction {
+    tool: 'summon_legend' | 'party_mode';
+    params: Record<string, any>;
+    description: string;
+}
 export interface Suggestion {
     should_invoke: boolean;
     confidence: 'high' | 'medium' | 'low';
@@ -11,7 +16,9 @@ export interface Suggestion {
     }[];
     use_party_mode: boolean;
     party_mode_reason?: string;
-    quick_prompt?: string;
+    suggested_actions: SuggestedAction[];
+    primary_action: SuggestedAction | null;
+    instruction: string;
 }
 /**
  * Analyze a message and suggest relevant legends

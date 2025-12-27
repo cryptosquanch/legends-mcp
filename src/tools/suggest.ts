@@ -10,6 +10,12 @@ export interface SuggestInput {
   message: string; // The user's message/question
 }
 
+export interface SuggestedAction {
+  tool: 'summon_legend' | 'party_mode';
+  params: Record<string, any>;
+  description: string;
+}
+
 export interface Suggestion {
   should_invoke: boolean;
   confidence: 'high' | 'medium' | 'low';
@@ -20,7 +26,13 @@ export interface Suggestion {
   }[];
   use_party_mode: boolean;
   party_mode_reason?: string;
-  quick_prompt?: string; // Ready-to-use prompt for Claude
+
+  // Ready-to-execute actions
+  suggested_actions: SuggestedAction[];
+  primary_action: SuggestedAction | null;
+
+  // Human-readable instruction for Claude
+  instruction: string;
 }
 
 // Topic keywords with associated legend IDs and confidence boosters
@@ -108,6 +120,9 @@ export function suggest(input: SuggestInput): Suggestion {
       confidence: 'low',
       recommended_legends: [],
       use_party_mode: false,
+      suggested_actions: [],
+      primary_action: null,
+      instruction: 'No legend recommendation for this message.',
     };
   }
 
@@ -165,14 +180,70 @@ export function suggest(input: SuggestInput): Suggestion {
     };
   });
 
-  // Generate quick prompt if we have recommendations
-  let quickPrompt: string | undefined;
-  if (recommended.length > 0 && confidence !== 'low') {
-    if (usePartyMode) {
-      quickPrompt = `Use party_mode with question: "${input.message}"`;
-    } else {
-      quickPrompt = `Use summon_legend with legend_id: "${recommended[0].id}"`;
+  // Build suggested actions with ready-to-use parameters
+  const suggestedActions: SuggestedAction[] = [];
+  let instruction = '';
+
+  if (recommended.length > 0 && topScore >= 2) {
+    // Always add party_mode option if 2+ legends match
+    if (recommended.length >= 2) {
+      suggestedActions.push({
+        tool: 'party_mode',
+        params: {
+          question: input.message,
+          legends: recommended.slice(0, 3).map(l => l.id),
+          max_legends: Math.min(recommended.length, 3),
+        },
+        description: `Get perspectives from ${recommended.slice(0, 3).map(l => l.name).join(', ')}`,
+      });
     }
+
+    // Always add summon_legend for top match
+    suggestedActions.push({
+      tool: 'summon_legend',
+      params: {
+        legend_id: recommended[0].id,
+        context: input.message,
+      },
+      description: `Ask ${recommended[0].name} (expert in ${recommended[0].why})`,
+    });
+
+    // Add second legend option if available
+    if (recommended.length >= 2) {
+      suggestedActions.push({
+        tool: 'summon_legend',
+        params: {
+          legend_id: recommended[1].id,
+          context: input.message,
+        },
+        description: `Ask ${recommended[1].name} (expert in ${recommended[1].why})`,
+      });
+    }
+  }
+
+  // Determine primary action and instruction
+  let primaryAction: SuggestedAction | null = null;
+
+  if (suggestedActions.length > 0) {
+    if (usePartyMode && suggestedActions.find(a => a.tool === 'party_mode')) {
+      primaryAction = suggestedActions.find(a => a.tool === 'party_mode')!;
+      instruction = `🎯 **RECOMMENDED: Use party_mode** for multiple perspectives from ${recommended.slice(0, 3).map(l => l.name).join(', ')}.\n\nCall: \`party_mode({ question: "${input.message.slice(0, 100)}${input.message.length > 100 ? '...' : ''}", legends: ${JSON.stringify(recommended.slice(0, 3).map(l => l.id))} })\``;
+    } else {
+      primaryAction = suggestedActions.find(a => a.tool === 'summon_legend')!;
+      instruction = `🎯 **RECOMMENDED: Summon ${recommended[0].name}** (${recommended[0].why}).\n\nCall: \`summon_legend({ legend_id: "${recommended[0].id}", context: "${input.message.slice(0, 80)}${input.message.length > 80 ? '...' : ''}" })\``;
+    }
+
+    // Add alternatives
+    if (suggestedActions.length > 1) {
+      instruction += '\n\n**Alternatives:**\n';
+      suggestedActions.slice(0, 3).forEach((action, i) => {
+        if (action !== primaryAction) {
+          instruction += `${i + 1}. ${action.description}\n`;
+        }
+      });
+    }
+  } else {
+    instruction = 'No legend recommendation for this message.';
   }
 
   return {
@@ -181,7 +252,9 @@ export function suggest(input: SuggestInput): Suggestion {
     recommended_legends: recommended,
     use_party_mode: usePartyMode,
     party_mode_reason: partyModeReason || undefined,
-    quick_prompt: quickPrompt,
+    suggested_actions: suggestedActions,
+    primary_action: primaryAction,
+    instruction,
   };
 }
 
@@ -194,36 +267,37 @@ export function formatSuggestion(suggestion: Suggestion, originalMessage: string
   }
 
   const lines: string[] = [
-    '💡 **Legend Suggestion**',
+    '# 💡 Legend Suggestion',
+    '',
+    suggestion.instruction,
+    '',
+    '---',
     '',
   ];
 
-  if (suggestion.use_party_mode && suggestion.recommended_legends.length >= 2) {
-    lines.push(`**Recommended:** Use \`party_mode\` for multiple perspectives`);
+  // Show all available actions
+  if (suggestion.suggested_actions.length > 0) {
+    lines.push('## Ready-to-Use Actions');
     lines.push('');
-    lines.push('**Relevant legends:**');
-    suggestion.recommended_legends.forEach(l => {
-      lines.push(`- **${l.name}** (${l.why})`);
-    });
-    if (suggestion.party_mode_reason) {
-      lines.push('');
-      lines.push(`*${suggestion.party_mode_reason}*`);
-    }
-  } else if (suggestion.recommended_legends.length > 0) {
-    const top = suggestion.recommended_legends[0];
-    lines.push(`**Recommended:** Ask **${top.name}** (expertise: ${top.why})`);
 
-    if (suggestion.recommended_legends.length > 1) {
+    suggestion.suggested_actions.forEach((action, i) => {
+      const isPrimary = action === suggestion.primary_action;
+      lines.push(`### ${isPrimary ? '⭐ ' : ''}Option ${i + 1}: ${action.tool}`);
+      lines.push(`${action.description}`);
+      lines.push('```json');
+      lines.push(JSON.stringify(action.params, null, 2));
+      lines.push('```');
       lines.push('');
-      lines.push('**Also relevant:**');
-      suggestion.recommended_legends.slice(1).forEach(l => {
-        lines.push(`- ${l.name} (${l.why})`);
-      });
-    }
+    });
   }
 
-  lines.push('');
-  lines.push(`*Confidence: ${suggestion.confidence}*`);
+  lines.push('---');
+  lines.push(`*Confidence: ${suggestion.confidence}* | *Legends matched: ${suggestion.recommended_legends.length}*`);
+
+  if (suggestion.party_mode_reason) {
+    lines.push('');
+    lines.push(`*Party mode reason: ${suggestion.party_mode_reason}*`);
+  }
 
   return lines.join('\n');
 }
@@ -231,31 +305,55 @@ export function formatSuggestion(suggestion: Suggestion, originalMessage: string
 // MCP Tool Definition - Note the description tells Claude to use this PROACTIVELY
 export const suggestTool = {
   name: 'suggest',
-  description: `🔮 **PROACTIVE SUGGESTION TOOL** - Call this on user questions to get legend recommendations!
+  description: `🔮 **PROACTIVE LEGEND SUGGESTER** - Returns ready-to-execute actions!
 
-**IMPORTANT: Use this tool proactively!**
-When a user asks about business, startups, investing, crypto, leadership, or life advice,
-call this tool FIRST to see if a legend can help.
+**⚡ USE THIS PROACTIVELY** on questions about:
+business, startups, investing, crypto, AI, leadership, decisions, life advice
 
-**How it works:**
-1. Pass the user's message/question
-2. Get back: which legends are relevant + whether to use party_mode
-3. Follow the recommendation (or let user decide)
+**HOW IT WORKS:**
+1. Pass user's message → \`suggest({ message: "..." })\`
+2. Get back \`primary_action\` with ready-to-use params
+3. **EXECUTE the suggested action** (party_mode or summon_legend)
 
-**Returns:**
-- \`should_invoke\`: Whether legends are relevant (true/false)
-- \`confidence\`: How confident the match is (high/medium/low)
-- \`recommended_legends\`: List of relevant legends with reasons
-- \`use_party_mode\`: Whether multiple perspectives would help
-- \`quick_prompt\`: Ready-to-use command
+**RETURNS READY ACTIONS:**
+\`\`\`json
+{
+  "primary_action": {
+    "tool": "party_mode",           // or "summon_legend"
+    "params": { ... },              // Ready to pass directly!
+    "description": "Get perspectives from Paul Graham, Marc Andreessen"
+  },
+  "suggested_actions": [ ... ],     // All options
+  "instruction": "🎯 RECOMMENDED: Use party_mode..."
+}
+\`\`\`
 
-**Example flow:**
+**EXAMPLE FLOW:**
+\`\`\`
 User: "How do I raise my seed round?"
-→ Call suggest({message: "How do I raise my seed round?"})
-→ Returns: paul-graham, marc-andreessen recommended, party_mode: true
-→ Either auto-invoke party_mode OR ask user if they want legend advice
 
-**Trigger keywords:** startup, crypto, invest, AI, founder, scale, leadership, decision, life advice
+1. Call: suggest({ message: "How do I raise my seed round?" })
+
+2. Response includes:
+   primary_action.tool = "party_mode"
+   primary_action.params = { question: "...", legends: ["paul-graham", "marc-andreessen", "bill-gurley"] }
+
+3. Execute: party_mode(primary_action.params)
+   → Multiple legends discuss the question!
+\`\`\`
+
+**OR for single legend:**
+\`\`\`
+primary_action.tool = "summon_legend"
+primary_action.params = { legend_id: "paul-graham", context: "..." }
+
+Execute: summon_legend(primary_action.params)
+→ Paul Graham responds in character!
+\`\`\`
+
+**WHEN TO USE party_mode vs summon_legend:**
+- party_mode: Complex questions, "pros/cons", "different perspectives", debates
+- summon_legend: Specific expertise needed, single mentor preferred
 
 DISCLAIMER: AI personas for educational purposes only.`,
   inputSchema: {
