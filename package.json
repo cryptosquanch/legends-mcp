@@ -1,6 +1,6 @@
 {
   "name": "legends-mcp",
-  "version": "1.3.0",
+  "version": "1.4.0",
   "mcpName": "io.github.cryptosquanch/legends-mcp",
   "description": "Chat with legendary founders & investors via MCP. Elon, Buffett, Jobs, CZ, and more. No API key required!",
   "main": "dist/index.js",

@@ -5,6 +5,7 @@ export { getLegendInsightTool, getLegendInsight, getAllLegendInsights } from './
 export { searchLegendsTool, searchLegends, formatSearchResults } from './search-legends.js';
 export { partyModeTool, partyMode, formatPartyMode } from './party-mode.js';
 export { autoMatchTool, autoMatch, formatAutoMatch } from './auto-match.js';
+export { suggestTool, suggest, formatSuggestion } from './suggest.js';
 export declare const allTools: ({
     name: string;
     description: string;
@@ -138,6 +139,19 @@ export declare const allTools: ({
                 description: string;
             };
             include_prompts: {
+                type: string;
+                description: string;
+            };
+        };
+        required: string[];
+    };
+} | {
+    name: string;
+    description: string;
+    inputSchema: {
+        type: "object";
+        properties: {
+            message: {
                 type: string;
                 description: string;
             };

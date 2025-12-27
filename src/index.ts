@@ -28,6 +28,8 @@ import {
   formatPartyMode,
   autoMatch,
   formatAutoMatch,
+  suggest,
+  formatSuggestion,
 } from './tools/index.js';
 
 // Load legends at startup
@@ -40,7 +42,7 @@ console.error(`[legends-mcp] No API key required - Claude does the roleplay!`);
 const server = new Server(
   {
     name: 'legends-mcp',
-    version: '1.3.0', // Security release - sync with package.json
+    version: '1.4.0', // Security release - sync with package.json
   },
   {
     capabilities: {
@@ -240,6 +242,50 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 
           return {
             content: [{ type: 'text', text: formatted }],
+          };
+        } catch (error) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              },
+            ],
+            isError: true,
+          };
+        }
+      }
+
+      case 'suggest': {
+        const input = args as { message: string };
+
+        if (!input.message) {
+          return {
+            content: [{ type: 'text', text: 'Error: message parameter is required' }],
+            isError: true,
+          };
+        }
+
+        try {
+          const result = suggest(input);
+
+          // If no suggestion needed, return minimal response
+          if (!result.should_invoke) {
+            return {
+              content: [{
+                type: 'text',
+                text: JSON.stringify({ should_invoke: false, confidence: 'low' }),
+              }],
+            };
+          }
+
+          // Return structured suggestion
+          const formatted = formatSuggestion(result, input.message);
+          return {
+            content: [{
+              type: 'text',
+              text: formatted + '\n\n```json\n' + JSON.stringify(result, null, 2) + '\n```',
+            }],
           };
         } catch (error) {
           return {

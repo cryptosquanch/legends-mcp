@@ -6,6 +6,7 @@ export { getLegendInsightTool, getLegendInsight, getAllLegendInsights } from './
 export { searchLegendsTool, searchLegends, formatSearchResults } from './search-legends.js';
 export { partyModeTool, partyMode, formatPartyMode } from './party-mode.js';
 export { autoMatchTool, autoMatch, formatAutoMatch } from './auto-match.js';
+export { suggestTool, suggest, formatSuggestion } from './suggest.js';
 // All tool definitions for registration
 import { listLegendsTool } from './list-legends.js';
 import { summonLegendTool } from './summon-legend.js';
@@ -14,7 +15,9 @@ import { getLegendInsightTool } from './get-legend-insight.js';
 import { searchLegendsTool } from './search-legends.js';
 import { partyModeTool } from './party-mode.js';
 import { autoMatchTool } from './auto-match.js';
+import { suggestTool } from './suggest.js';
 export const allTools = [
+    suggestTool, // First! Claude should see this first for proactive use
     listLegendsTool,
     summonLegendTool,
     getLegendContextTool,
