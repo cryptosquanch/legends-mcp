@@ -24,6 +24,10 @@ import {
   getLegendInsight,
   searchLegends,
   formatSearchResults,
+  partyMode,
+  formatPartyMode,
+  autoMatch,
+  formatAutoMatch,
 } from './tools/index.js';
 
 // Load legends at startup
@@ -36,7 +40,7 @@ console.error(`[legends-mcp] No API key required - Claude does the roleplay!`);
 const server = new Server(
   {
     name: 'legends-mcp',
-    version: '1.1.3',
+    version: '1.3.0', // Security release - sync with package.json
   },
   {
     capabilities: {
@@ -179,6 +183,75 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         return {
           content: [{ type: 'text', text: formatted }],
         };
+      }
+
+      case 'party_mode': {
+        const input = args as {
+          question: string;
+          legends?: string[];
+          category?: string;
+          max_legends?: number;
+        };
+
+        if (!input.question) {
+          return {
+            content: [{ type: 'text', text: 'Error: question parameter is required' }],
+            isError: true,
+          };
+        }
+
+        try {
+          const result = partyMode(input);
+          const formatted = formatPartyMode(result);
+
+          return {
+            content: [{ type: 'text', text: formatted }],
+          };
+        } catch (error) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              },
+            ],
+            isError: true,
+          };
+        }
+      }
+
+      case 'auto_match': {
+        const input = args as {
+          question: string;
+          max_matches?: number;
+          include_prompts?: boolean;
+        };
+
+        if (!input.question) {
+          return {
+            content: [{ type: 'text', text: 'Error: question parameter is required' }],
+            isError: true,
+          };
+        }
+
+        try {
+          const result = autoMatch(input);
+          const formatted = formatAutoMatch(result);
+
+          return {
+            content: [{ type: 'text', text: formatted }],
+          };
+        } catch (error) {
+          return {
+            content: [
+              {
+                type: 'text',
+                text: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+              },
+            ],
+            isError: true,
+          };
+        }
       }
 
       default:

@@ -17,10 +17,15 @@ export declare function getLegendById(id: string): LegendSkill | undefined;
 export declare function getLegendSummaries(): LegendSummary[];
 /**
  * Search legends by query
+ * SECURITY: Uses safe string handling to prevent crashes from malformed data
  */
 export declare function searchLegends(query: string): LegendSkill[];
 /**
  * Get legend count
  */
 export declare function getLegendCount(): number;
+/**
+ * Clear the legends cache (for testing)
+ */
+export declare function clearLegendsCache(): void;
 //# sourceMappingURL=loader.d.ts.map

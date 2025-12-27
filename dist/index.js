@@ -7,7 +7,7 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import { ListToolsRequestSchema, CallToolRequestSchema, ListResourcesRequestSchema, ReadResourceRequestSchema, } from '@modelcontextprotocol/sdk/types.js';
 import { loadLegends, getAllLegends, getLegendById, getLegendCount } from './legends/loader.js';
 import { formatLegendMarkdown } from './legends/prompt-builder.js';
-import { allTools, listLegends, formatLegendsMarkdown, summonLegend, formatSummonedLegend, getLegendContext, getLegendInsight, searchLegends, formatSearchResults, } from './tools/index.js';
+import { allTools, listLegends, formatLegendsMarkdown, summonLegend, formatSummonedLegend, getLegendContext, getLegendInsight, searchLegends, formatSearchResults, partyMode, formatPartyMode, autoMatch, formatAutoMatch, } from './tools/index.js';
 // Load legends at startup
 const legends = loadLegends();
 console.error(`[legends-mcp] Loaded ${getLegendCount()} legends`);
@@ -15,7 +15,7 @@ console.error(`[legends-mcp] No API key required - Claude does the roleplay!`);
 // Create MCP server
 const server = new Server({
     name: 'legends-mcp',
-    version: '1.1.3',
+    version: '1.3.0', // Security release - sync with package.json
 }, {
     capabilities: {
         tools: {},
@@ -129,6 +129,60 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
                 return {
                     content: [{ type: 'text', text: formatted }],
                 };
+            }
+            case 'party_mode': {
+                const input = args;
+                if (!input.question) {
+                    return {
+                        content: [{ type: 'text', text: 'Error: question parameter is required' }],
+                        isError: true,
+                    };
+                }
+                try {
+                    const result = partyMode(input);
+                    const formatted = formatPartyMode(result);
+                    return {
+                        content: [{ type: 'text', text: formatted }],
+                    };
+                }
+                catch (error) {
+                    return {
+                        content: [
+                            {
+                                type: 'text',
+                                text: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+                            },
+                        ],
+                        isError: true,
+                    };
+                }
+            }
+            case 'auto_match': {
+                const input = args;
+                if (!input.question) {
+                    return {
+                        content: [{ type: 'text', text: 'Error: question parameter is required' }],
+                        isError: true,
+                    };
+                }
+                try {
+                    const result = autoMatch(input);
+                    const formatted = formatAutoMatch(result);
+                    return {
+                        content: [{ type: 'text', text: formatted }],
+                    };
+                }
+                catch (error) {
+                    return {
+                        content: [
+                            {
+                                type: 'text',
+                                text: `Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
+                            },
+                        ],
+                        isError: true,
+                    };
+                }
             }
             default:
                 return {
