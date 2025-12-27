@@ -166,6 +166,16 @@ export function suggest(input) {
                 description: `Ask ${recommended[1].name} (expert in ${recommended[1].why})`,
             });
         }
+        // Always add auto_match for deeper exploration
+        suggestedActions.push({
+            tool: 'auto_match',
+            params: {
+                question: input.message,
+                max_matches: 3,
+                include_prompts: false,
+            },
+            description: `Deep dive: Get detailed analysis of which legends best match this question`,
+        });
     }
     // Determine primary action and instruction
     let primaryAction = null;
@@ -288,9 +298,12 @@ Execute: summon_legend(primary_action.params)
 → Paul Graham responds in character!
 \`\`\`
 
-**WHEN TO USE party_mode vs summon_legend:**
-- party_mode: Complex questions, "pros/cons", "different perspectives", debates
-- summon_legend: Specific expertise needed, single mentor preferred
+**WHEN TO USE EACH TOOL:**
+- **party_mode**: Complex questions, "pros/cons", "different perspectives", debates
+- **summon_legend**: Specific expertise needed, single mentor preferred
+- **auto_match**: Deep analysis, unsure which legend, want detailed matching
+
+**ALL 3 ARE ALWAYS SUGGESTED** - pick the best fit for the user's needs!
 
 DISCLAIMER: AI personas for educational purposes only.`,
     inputSchema: {

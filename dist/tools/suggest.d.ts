@@ -2,7 +2,7 @@ export interface SuggestInput {
     message: string;
 }
 export interface SuggestedAction {
-    tool: 'summon_legend' | 'party_mode';
+    tool: 'summon_legend' | 'party_mode' | 'auto_match';
     params: Record<string, any>;
     description: string;
 }
