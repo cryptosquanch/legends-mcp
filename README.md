@@ -1,14 +1,30 @@
-# Legends MCP
+# 🏛️ Legends MCP
 
-> **Chat with legendary founders & investors in Claude Code. No API key required!**
+[![npm version](https://img.shields.io/npm/v/legends-mcp.svg)](https://www.npmjs.com/package/legends-mcp)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-Ever wanted to ask Elon Musk about first principles? Get Warren Buffett's take on your investment thesis? Have Steve Jobs roast your product design?
+> **Chat with legendary founders & investors in Claude. No API key required!**
 
-Now you can. Kinda.
+Ever wanted to ask Elon Musk about first principles? Get Warren Buffett's take on your investment? Have Steve Jobs roast your product design? Get Paul Graham and Marc Andreessen to **debate** your startup idea?
 
-## Quick Start
+**Now you can.** With Party Mode, multiple legends can discuss your questions together!
 
-**Claude Code config** (`~/.claude/config.json`):
+---
+
+## ✨ What's New in v1.4
+
+| Feature | Description |
+|---------|-------------|
+| 🎭 **Party Mode** | Multiple legends discuss your question together |
+| 🔮 **Smart Suggest** | Proactively recommends relevant legends |
+| 🎯 **Auto Match** | Deep analysis of which legends fit your topic |
+| 🔒 **Security Fixes** | Prompt injection protection, input sanitization |
+
+---
+
+## 🚀 Quick Start
+
+**Claude Code** (`~/.claude/settings.json`):
 ```json
 {
   "mcpServers": {
@@ -20,153 +36,249 @@ Now you can. Kinda.
 }
 ```
 
-**That's it.** No API key needed. Restart Claude Code and start chatting.
+**That's it.** No API key needed. Restart Claude Code and start chatting!
 
 ---
 
-## The Council of Legends
+## 🎭 Party Mode - Multi-Legend Discussions
 
-### Tech Titans
-| Legend | Vibe |
-|--------|------|
-| **Elon Musk** | First principles. Physics. Delete requirements. Sleep at factory. |
-| **Steve Jobs** | Design is how it works. Reality distortion field. One more thing... |
-| **Jeff Bezos** | Day 1 forever. Regret minimization. Customer obsession. |
-| **Jensen Huang** | Leather jacket CEO. CUDA everything. AI is eating the world. |
+Ask complex questions and get perspectives from multiple legends:
 
-### Investors
-| Legend | Vibe |
-|--------|------|
-| **Warren Buffett** | Cherry Coke. Compound interest. Be fearful when others are greedy. |
-| **Charlie Munger** | Mental models. Brutal honesty. Invert, always invert. |
-| **Peter Thiel** | Zero to one. Contrarian bets. Competition is for losers. |
-| **Marc Andreessen** | Software eating world. Techno-optimist. It's time to build. |
+```
+You: "How should I approach raising my seed round?"
 
-### Startup Sages
-| Legend | Vibe |
-|--------|------|
-| **Paul Graham** | Essays. Make something people want. Do things that don't scale. |
-| **Sam Altman** | AGI believer. YC to OpenAI. Move fast on AI. |
-| **Naval Ravikant** | Seek wealth, not money. Specific knowledge. Leverage. |
-| **Reid Hoffman** | LinkedIn mafia. Blitzscaling. Networks. |
+Claude: *Activates Party Mode with Paul Graham, Marc Andreessen, and Bill Gurley*
 
-### Crypto Builders
-| Legend | Vibe |
-|--------|------|
-| **CZ** | BUIDL. 4. Funds are SAFU. Global from day one. |
-| **Anatoly Yakovenko** | Proof of History. TPS maximalist. Hardware trends. |
-| **Mert Mumtaz** | RPC is life. Developer experience. Docs are product. |
-| **Michael Heinrich** | YC alum. Web exit. Decentralized AI infrastructure. |
+Paul Graham: "The best fundraising advice is: make something people want first.
+Don't optimize for raising money. Optimize for building something users love..."
+
+Marc Andreessen: "Software is eating the world, and VCs know it. Show us
+the market size. Show us why NOW is the time..."
+
+Bill Gurley: "Valuation is a vanity metric. What matters is finding partners
+who truly understand your business..."
+```
+
+### When Party Mode Activates
+- Complex questions with multiple valid perspectives
+- "Pros and cons" or "different viewpoints" requests
+- Debates between different schools of thought
+- Questions matching 2+ legends' expertise
 
 ---
 
-## Usage
+## 🔮 Smart Suggest - Proactive Recommendations
 
-Once configured, use these tools in Claude Code:
+The `suggest` tool analyzes your question and returns **ready-to-execute actions**:
 
-### List all legends
 ```
-Use list_legends to see who's available
-```
+User: "How do I build a crypto exchange?"
 
-### Summon a legend
-```
-Use summon_legend with legend_id="elon-musk" to channel Elon
-```
-Claude will adopt the legend's persona and respond in character!
+suggest() returns:
+┌─────────────────────────────────────────────────┐
+│ primary_action: {                               │
+│   tool: "party_mode",                           │
+│   params: {                                     │
+│     question: "How do I build a crypto exchange"│
+│     legends: ["cz-binance", "brian-armstrong"]  │
+│   }                                             │
+│ }                                               │
+│                                                 │
+│ suggested_actions: [                            │
+│   { tool: "party_mode", ... },                  │
+│   { tool: "summon_legend", id: "cz-binance" },  │
+│   { tool: "summon_legend", id: "brian-armstrong"│
+│   { tool: "auto_match", ... }                   │
+│ ]                                               │
+└─────────────────────────────────────────────────┘
 
-### Get deep context
-```
-Use get_legend_context to see their frameworks, principles, and examples
-```
-
-### Get quick insight
-```
-Use get_legend_insight with legend_id="warren-buffett" for a quick wisdom snippet
+Claude picks the best option and executes it!
 ```
 
 ---
 
-## How It Works
+## 👥 The Council of Legends (36 Total)
 
-Unlike other AI persona tools that require API keys, **Legends MCP** works differently:
+### 🚀 Tech Titans
+| Legend | Specialty |
+|--------|-----------|
+| **Elon Musk** | First principles, physics thinking, building the impossible |
+| **Steve Jobs** | Product design, reality distortion, user experience |
+| **Jeff Bezos** | Day 1 thinking, customer obsession, long-term vision |
+| **Jensen Huang** | GPUs, AI infrastructure, CUDA everything |
+| **Satya Nadella** | Enterprise transformation, cloud, culture change |
 
-1. **You call `summon_legend`** with a legend ID
-2. **MCP returns the persona context** (identity, voice, principles, frameworks)
-3. **Claude adopts the persona** and responds in character
+### 💰 Legendary Investors
+| Legend | Specialty |
+|--------|-----------|
+| **Warren Buffett** | Value investing, compound interest, circle of competence |
+| **Charlie Munger** | Mental models, multidisciplinary thinking, inversion |
+| **Ray Dalio** | Principles, radical transparency, macro investing |
+| **Peter Thiel** | Zero to one, contrarian bets, monopolies |
+| **Marc Andreessen** | Software eating world, venture capital, tech optimism |
 
-No external API calls. No API keys. Just Claude + persona data = magic.
+### 🌱 Startup Sages
+| Legend | Specialty |
+|--------|-----------|
+| **Paul Graham** | Essays, YC wisdom, making things people want |
+| **Sam Altman** | Startups, AI/AGI, scaling companies |
+| **Naval Ravikant** | Wealth creation, leverage, specific knowledge |
+| **Reid Hoffman** | Network effects, blitzscaling, LinkedIn |
+| **Brian Chesky** | Design thinking, Airbnb, company culture |
+
+### ⛓️ Crypto Builders
+| Legend | Specialty |
+|--------|-----------|
+| **CZ (Changpeng Zhao)** | Exchange building, BUIDL, global expansion |
+| **Vitalik Buterin** | Ethereum, smart contracts, crypto philosophy |
+| **Anatoly Yakovenko** | Solana, proof of history, performance |
+| **Balaji Srinivasan** | Network state, crypto predictions, tech trends |
+
+*...and 17 more legends including Tim Ferriss, Gary Vaynerchuk, Tobi Lütke, and others!*
 
 ---
 
-## Environment Variables
+## 🛠️ All Tools
+
+| Tool | Purpose | Example |
+|------|---------|---------|
+| `suggest` | 🔮 Proactive recommendations | Analyzes your question, suggests best legend(s) |
+| `party_mode` | 🎭 Multi-legend discussion | Get 2-5 legends to discuss together |
+| `summon_legend` | 👤 Single legend advice | Channel one legend's perspective |
+| `auto_match` | 🎯 Deep legend discovery | Detailed analysis of which legends fit |
+| `list_legends` | 📋 Browse all legends | See all 36 available legends |
+| `search_legends` | 🔍 Find by keyword | Search by expertise, name, or topic |
+| `get_legend_context` | 📖 Deep dive | Get frameworks, principles, examples |
+| `get_legend_insight` | 💡 Quick wisdom | Get a concise insight on any topic |
+
+---
+
+## 🔒 Security
+
+v1.3+ includes security hardening:
+
+- ✅ **Prompt injection protection** - User context isolated from system prompts
+- ✅ **Input sanitization** - Detects and neutralizes injection attempts
+- ✅ **Safe output encoding** - JSON encoding prevents markdown injection
+- ✅ **No CWD loading** - Only loads bundled legends (opt-in for custom)
+- ✅ **No external APIs** - Zero network requests, zero data leakage
+
+---
+
+## 📊 How It Works
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    ARCHITECTURE                              │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│   User Question                                              │
+│        │                                                     │
+│        ▼                                                     │
+│   ┌──────────────────┐                                       │
+│   │  suggest()       │  ← Analyzes question                  │
+│   │  "Who can help?" │                                       │
+│   └────────┬─────────┘                                       │
+│            │                                                 │
+│            ▼                                                 │
+│   ┌──────────────────┐     ┌──────────────────┐             │
+│   │  party_mode()    │ OR  │  summon_legend() │             │
+│   │  (multi-legend)  │     │  (single legend) │             │
+│   └────────┬─────────┘     └────────┬─────────┘             │
+│            │                        │                        │
+│            ▼                        ▼                        │
+│   ┌──────────────────────────────────────────────┐          │
+│   │           legends/*.yaml                      │          │
+│   │  (36 bundled persona files - NO API calls!)  │          │
+│   └──────────────────────────────────────────────┘          │
+│            │                                                 │
+│            ▼                                                 │
+│   Claude adopts persona(s) and responds in character!       │
+│                                                              │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Zero external APIs. Zero API keys. Just Claude + persona data.**
+
+---
+
+## 🎯 Usage Examples
+
+### Get startup advice from multiple perspectives
+```
+"What's the most important thing for a first-time founder?"
+→ Party Mode: Paul Graham + Sam Altman + Brian Chesky discuss
+```
+
+### Deep dive on investing
+```
+"Should I invest in Bitcoin?"
+→ Warren Buffett (skeptic) vs Balaji (bull) debate
+```
+
+### Technical decisions
+```
+"How do I scale my database?"
+→ Summon Jeff Bezos for Day 1 / SOA thinking
+```
+
+### Life advice
+```
+"How do I build wealth?"
+→ Naval Ravikant on leverage, specific knowledge, equity
+```
+
+---
+
+## ⚙️ Environment Variables
 
 | Variable | Default | Description |
 |----------|---------|-------------|
+| `LEGENDS_MCP_LEGENDS_DIR` | (bundled) | Custom legends directory |
+| `LEGENDS_MCP_ALLOW_CWD` | `false` | Allow loading from current directory |
 | `LEGENDS_MCP_DEBUG` | `false` | Enable debug logging |
 
 ---
 
-## Important Disclaimers
+## ⚠️ Disclaimers
 
 ```
-NOT affiliated with, endorsed by, or representative of any real individual
-NOT financial, legal, or professional advice
-AI personas for EDUCATIONAL and ENTERTAINMENT purposes only
-Based on publicly available information, speeches, and writings
-Always do your own research (DYOR)
+⚠️ NOT affiliated with, endorsed by, or representative of any real individual
+⚠️ NOT financial, legal, or professional advice
+⚠️ AI personas for EDUCATIONAL and ENTERTAINMENT purposes only
+⚠️ Based on publicly available information, speeches, and writings
+⚠️ Always do your own research (DYOR)
 ```
 
-The views expressed by these AI personas are generated interpretations, not actual statements from the real people.
+The views expressed by these AI personas are **generated interpretations**, not actual statements from the real people.
 
 ---
 
-## Examples
-
-**💻 [Code Examples](./examples/)** - Runnable examples covering:
-- **Combined Workflow**: Using `get_legend_context` + `get_legend_insight` together
-- **Brainstorming Sessions**: Alternating insights from multiple legends
-- **Conflicting Advice**: Resolving disagreements between legends
-- **Multi-Turn Conversations**: Maintaining persona context across exchanges
-- **Blockchain Discussion**: Using Crypto Builder personas (CZ, Andre Cronje, Anatoly)
-
-Each example is executable (`chmod +x examples/*.js`) and includes:
-- Real-world scenarios (startup decisions, product design, DeFi protocols)
-- Error handling patterns
-- Performance optimization tips
-- Complete MCP tool coverage
-
-See **[examples/README.md](./examples/README.md)** for full catalog and usage guide.
-
----
-
-## Documentation
-
-**📚 [Architecture Guide](./ARCHITECTURE.md)** - Learn how to:
-- Scale Legends MCP with custom user-defined personas
-- Maintain privacy-first design (zero external APIs)
-- Implement multi-tenancy and storage solutions
-- Extend the YAML schema for custom use cases
-
----
-
-## Contributing
+## 🤝 Contributing
 
 Want to add a legend? PRs welcome!
 
 Each legend needs:
-- `skill.yaml` with identity, voice, principles, patterns
+- `legends/<name>/skill.yaml` with identity, voice, principles, patterns
 - Authentic voice based on public knowledge
 - Clear guardrails (things they'd never say)
 
+See existing legends for examples.
+
 ---
 
-## License
+## 📄 License
 
-MIT - Do what you want, but include the disclaimers.
+MIT - Use freely, but include the disclaimers.
 
 ---
 
 <p align="center">
-  <i>"The best time to get advice from a legend was 20 years ago. The second best time is now."</i>
+  <b>🏛️ "The best time to get advice from a legend was 20 years ago.<br>The second best time is now."</b>
+</p>
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/legends-mcp">npm</a> •
+  <a href="https://github.com/cryptosquanch/legends-mcp">GitHub</a> •
+  <a href="https://glama.ai/mcp/servers/legends-mcp">Glama</a>
 </p>

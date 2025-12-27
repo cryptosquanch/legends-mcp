@@ -15,7 +15,7 @@ console.error(`[legends-mcp] No API key required - Claude does the roleplay!`);
 // Create MCP server
 const server = new Server({
     name: 'legends-mcp',
-    version: '1.4.2', // Security release - sync with package.json
+    version: '1.4.3', // Security release - sync with package.json
 }, {
     capabilities: {
         tools: {},
